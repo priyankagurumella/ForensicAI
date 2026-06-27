@@ -76,3 +76,29 @@
 ---
 
 ## 🏗️ Project Structure
+ForensicAI/
+├── backend/
+│   ├── app.py                  ← Flask API
+│   ├── phase1_fakenews/        ← NLP module
+│   │   ├── dataset.py
+│   │   ├── preprocess.py
+│   │   ├── train.py
+│   │   ├── evaluate.py
+│   │   ├── predict.py
+│   │   └── scraper.py
+│   ├── phase2_deepfake/        ← CV module
+│   │   ├── dataset.py
+│   │   ├── preprocess.py
+│   │   ├── train.py
+│   │   ├── evaluate.py
+│   │   ├── predict.py
+│   │   └── gradcam.py
+│   └── models/                 ← Saved models
+├── frontend/
+│   ├── index.html              ← Landing page
+│   ├── dashboard.html          ← Detection dashboard
+│   ├── css/
+│   └── js/
+├── data/
+├── report/                     ← Confusion matrices, Grad-CAM
+└── requirements.txt
