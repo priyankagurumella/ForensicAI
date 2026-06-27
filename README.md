@@ -33,13 +33,6 @@
 
 ## 📸 Screenshots
 
-### Landing Page
-
-
-![Landing Page](report/landing.png)
-
-
-
 ### Fake News Detection
 
 
@@ -76,29 +69,121 @@
 ---
 
 ## 🏗️ Project Structure
+
+```
 ForensicAI/
 ├── backend/
-│   ├── app.py                  ← Flask API
-│   ├── phase1_fakenews/        ← NLP module
+│   ├── app.py
+│   ├── phase1_fakenews/
 │   │   ├── dataset.py
 │   │   ├── preprocess.py
 │   │   ├── train.py
 │   │   ├── evaluate.py
 │   │   ├── predict.py
 │   │   └── scraper.py
-│   ├── phase2_deepfake/        ← CV module
+│   ├── phase2_deepfake/
 │   │   ├── dataset.py
 │   │   ├── preprocess.py
 │   │   ├── train.py
 │   │   ├── evaluate.py
 │   │   ├── predict.py
 │   │   └── gradcam.py
-│   └── models/                 ← Saved models
+│   └── models/
 ├── frontend/
-│   ├── index.html              ← Landing page
-│   ├── dashboard.html          ← Detection dashboard
+│   ├── index.html
+│   ├── dashboard.html
 │   ├── css/
 │   └── js/
 ├── data/
-├── report/                     ← Confusion matrices, Grad-CAM
+├── report/
 └── requirements.txt
+```
+
+---
+
+## ⚙️ Setup & Installation
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/priyankagurumella/ForensicAI.git
+cd ForensicAI
+```
+
+### 2. Create virtual environment
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+### 3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Download datasets
+- Fake News: [Kaggle - Fake and Real News Dataset](https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset)
+- Deepfake: [Kaggle - 140k Real and Fake Faces](https://www.kaggle.com/datasets/xhlulu/140k-real-and-fake-faces)
+
+Place them in `data/raw/`
+
+### 5. Train models
+```bash
+python backend/phase1_fakenews/train.py
+python backend/phase2_deepfake/train.py
+```
+
+### 6. Run the app
+```bash
+python backend/app.py
+```
+
+Open `frontend/index.html` with Live Server
+
+---
+
+## 📊 Model Performance
+
+| Module | Model | Accuracy | F1 Score |
+|--------|-------|----------|----------|
+| Fake News | Passive Aggressive | **99.60%** | 0.9959 |
+| Fake News | Logistic Regression | 99.11% | 0.9908 |
+| Fake News | Naive Bayes | 94.72% | 0.9454 |
+| Deepfake | EfficientNet-B0 | **83.41%** | — |
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Backend | Python, Flask, Flask-CORS |
+| NLP | Scikit-learn, NLTK, TF-IDF |
+| Computer Vision | PyTorch, EfficientNet-B0, Grad-CAM |
+| Frontend | HTML5, CSS3, JavaScript |
+| Data | Pandas, NumPy, Matplotlib, Seaborn |
+| Scraping | BeautifulSoup, Requests |
+
+---
+
+## 🔮 Future Work
+
+- 🎙️ Audio deepfake detection (voice cloning)
+- 🌐 Browser extension for real-time detection
+- 📱 Mobile app version
+- 🤖 LLM integration for explanation generation
+- 🔁 Active learning feedback loop
+
+---
+
+## 👩‍💻 Developer
+
+**Durga Lalitha Priyanka Gurumella**
+- 🎓 B.Tech Information Technology, MVGR College of Engineering
+- 💼 Data Science Intern, Averixis Solutions
+- 🐙 [GitHub](https://github.com/priyankagurumella)
+
+---
+
+## 📄 License
+
+MIT License — feel free to use for educational purposes.
