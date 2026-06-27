@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForensicAI - Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🔍</span>
+                <span class="logo-text">ForensicAI</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">← Back to Home</a>
+                <span class="nav-status">● API Connected</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard">
+
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-title">Detection Modules</div>
+            <button class="sidebar-btn active" onclick="showTab('fakenews')">
+                <span>📰</span> Fake News
+            </button>
+            <button class="sidebar-btn" onclick="showTab('deepfake')">
+                <span>🖼️</span> Deepfake
+            </button>
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-info">
+                <div class="info-item">
+                    <span class="info-label">News Model</span>
+                    <span class="info-value">99.6%</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Deepfake Model</span>
+                    <span class="info-value">83.4%</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Algorithm</span>
+                    <span class="info-value">PAC + EffNet</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Status</span>
+                    <span class="info-value green">● Active</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+
+            <!-- FAKE NEWS TAB -->
+            <div id="fakenews-tab" class="tab-content active">
+                <div class="tab-header">
+                    <h2>📰 Fake News Detection</h2>
+                    <p>Paste news text or enter a URL to analyze authenticity instantly</p>
+                </div>
+
+                <div class="input-section">
+                    <div class="input-toggle">
+                        <button class="toggle-btn active" onclick="switchInput('text')">
+                            📝 Paste Text
+                        </button>
+                        <button class="toggle-btn" onclick="switchInput('url')">
+                            🌐 Enter URL
+                        </button>
+                    </div>
+
+                    <div id="text-input">
+                        <textarea id="news-text"
+                            placeholder="Paste your news article here to analyze..."></textarea>
+                        <div class="char-counter" id="char-counter">0 characters</div>
+                    </div>
+
+                    <div id="url-input" style="display:none">
+                        <input type="text" id="news-url"
+                            placeholder="https://example.com/news-article">
+                    </div>
+
+                    <button class="analyze-btn" onclick="analyzeNews()">
+                        🔍 Analyze Article
+                    </button>
+                </div>
+
+                <!-- Result -->
+                <div id="news-result" class="result-section" style="display:none">
+                    <div class="result-card">
+                        <div class="result-verdict" id="news-verdict"></div>
+                        <div class="result-confidence" id="news-confidence"></div>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="news-bar"></div>
+                        </div>
+                        <div class="result-details" id="news-details"></div>
+                    </div>
+                </div>
+
+                <!-- Loading -->
+                <div id="news-loading" class="loading" style="display:none">
+                    <div class="spinner"></div>
+                    <p>Analyzing article with AI...</p>
+                </div>
+
+                <!-- Model Chart -->
+                <div class="model-chart" id="news-chart"></div>
+
+                <!-- History -->
+                <div class="history-section">
+                    <div class="history-title">Recent Analyses</div>
+                    <div class="history-list" id="news-history-list">
+                        <p style="color:rgba(255,255,255,0.25);font-size:0.82rem">
+                            No analyses yet — try detecting some news above!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DEEPFAKE TAB -->
+            <div id="deepfake-tab" class="tab-content" style="display:none">
+                <div class="tab-header">
+                    <h2>🖼️ Deepfake Detection</h2>
+                    <p>Upload an image to detect if it's AI-generated or manipulated</p>
+                </div>
+
+                <div class="input-section">
+                    <div class="upload-area" id="upload-area"
+                        onclick="document.getElementById('image-input').click()">
+                        <div class="upload-icon">📁</div>
+                        <p>Click or drag & drop to upload</p>
+                        <span>JPG, PNG supported • Max 10MB</span>
+                        <input type="file" id="image-input" accept="image/*"
+                            style="display:none" onchange="previewImage(event)">
+                    </div>
+
+                    <div id="image-preview" style="display:none">
+                        <img id="preview-img" src="" alt="Preview">
+                    </div>
+
+                    <button class="analyze-btn" onclick="analyzeDeepfake()"
+                        id="deepfake-btn" style="display:none">
+                        🔍 Analyze Image
+                    </button>
+                </div>
+
+                <!-- Result -->
+                <div id="deepfake-result" class="result-section" style="display:none">
+                    <div class="result-card">
+                        <div class="result-verdict" id="deepfake-verdict"></div>
+                        <div class="result-confidence" id="deepfake-confidence"></div>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="deepfake-bar"></div>
+                        </div>
+                        <div class="prob-breakdown" id="prob-breakdown"></div>
+                    </div>
+                </div>
+
+                <!-- Loading -->
+                <div id="deepfake-loading" class="loading" style="display:none">
+                    <div class="spinner"></div>
+                    <p>Analyzing image with EfficientNet...</p>
+                </div>
+
+                <!-- History -->
+                <div class="history-section">
+                    <div class="history-title">Recent Analyses</div>
+                    <div class="history-list" id="deepfake-history-list">
+                        <p style="color:rgba(255,255,255,0.25);font-size:0.82rem">
+                            No analyses yet — upload an image above!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
