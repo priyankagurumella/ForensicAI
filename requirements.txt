@@ -6,8 +6,6 @@ numpy
 matplotlib
 seaborn
 nltk
-datasets
-newspaper3k
 torch
 torchvision
 pillow
@@ -16,3 +14,7 @@ tqdm
 joblib
 python-dotenv
 requests
+beautifulsoup4
+pyarrow
+datasets
+newspaper3k
