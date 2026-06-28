@@ -847,3 +847,16 @@ input[type="text"]::placeholder { color: rgba(255,255,255,0.18); }
     .history-text { max-width: 200px; }
     .input-card-header { flex-direction: column; align-items: flex-start; }
 }
+/* Mobile sidebar fix */
+@media (max-width: 768px) {
+    .sidebar {
+        justify-content: center;
+    }
+    
+    .sidebar-btn {
+        flex: 1;
+        justify-content: center;
+        text-align: center;
+        min-width: 120px;
+    }
+}
