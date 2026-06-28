@@ -54,6 +54,30 @@
                     <span class="info-value green">● Active</span>
                 </div>
             </div>
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-stats">
+                <div class="mini-stat">
+                    <div class="mini-stat-icon">🧠</div>
+                    <div>
+                        <div class="mini-stat-val">3 Models</div>
+                        <div class="mini-stat-label">Compared</div>
+                    </div>
+                </div>
+                <div class="mini-stat">
+                    <div class="mini-stat-icon">📊</div>
+                    <div>
+                        <div class="mini-stat-val">44K+</div>
+                        <div class="mini-stat-label">Articles</div>
+                    </div>
+                </div>
+                <div class="mini-stat">
+                    <div class="mini-stat-icon">🖼️</div>
+                    <div>
+                        <div class="mini-stat-val">10K+</div>
+                        <div class="mini-stat-label">Faces</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- MAIN CONTENT -->
@@ -61,30 +85,61 @@
 
             <!-- FAKE NEWS TAB -->
             <div id="fakenews-tab" class="tab-content active">
+
+                <!-- Header -->
                 <div class="tab-header">
-                    <h2>📰 Fake News Detection</h2>
-                    <p>Paste news text or enter a URL to analyze authenticity instantly</p>
+                    <div class="tab-header-left">
+                        <div class="tab-icon-wrap">📰</div>
+                        <div>
+                            <h2>Fake News Detection</h2>
+                            <p>Paste news text or enter a URL to analyze authenticity instantly</p>
+                        </div>
+                    </div>
+                    <div class="tab-accuracy-badge">
+                        <span>99.6%</span> Accuracy
+                    </div>
                 </div>
 
-                <div class="input-section">
-                    <div class="input-toggle">
-                        <button class="toggle-btn active" onclick="switchInput('text')">
-                            📝 Paste Text
-                        </button>
-                        <button class="toggle-btn" onclick="switchInput('url')">
-                            🌐 Enter URL
-                        </button>
+                <!-- Input Card -->
+                <div class="input-card">
+                    <div class="input-card-header">
+                        <div class="input-toggle">
+                            <button class="toggle-btn active" onclick="switchInput('text')">
+                                📝 Paste Text
+                            </button>
+                            <button class="toggle-btn" onclick="switchInput('url')">
+                                🌐 Enter URL
+                            </button>
+                        </div>
+                        <div class="input-actions">
+                            <button class="sample-btn" onclick="loadSample()">
+                                ⚡ Try Sample
+                            </button>
+                            <button class="clear-btn" onclick="clearInput()">
+                                🗑️ Clear
+                            </button>
+                        </div>
                     </div>
 
                     <div id="text-input">
                         <textarea id="news-text"
-                            placeholder="Paste your news article here to analyze..."></textarea>
+                            placeholder="Paste your news article here to analyze authenticity..."></textarea>
                         <div class="char-counter" id="char-counter">0 characters</div>
                     </div>
 
                     <div id="url-input" style="display:none">
                         <input type="text" id="news-url"
-                            placeholder="https://example.com/news-article">
+                            placeholder="https://www.bbc.com/news/article...">
+                    </div>
+
+                    <!-- Tips -->
+                    <div class="tips-box">
+                        <span class="tips-icon">💡</span>
+                        <div class="tips-content">
+                            <span>✓ Min 2-3 sentences</span>
+                            <span>✓ Works with news articles</span>
+                            <span>✓ Try BBC / Reuters URLs</span>
+                        </div>
                     </div>
 
                     <button class="analyze-btn" onclick="analyzeNews()">
@@ -92,11 +147,24 @@
                     </button>
                 </div>
 
+                <!-- Loading -->
+                <div id="news-loading" class="loading" style="display:none">
+                    <div class="loading-inner">
+                        <div class="spinner"></div>
+                        <div>
+                            <div class="loading-title">Analyzing with AI...</div>
+                            <div class="loading-sub">Running NLP model on your text</div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Result -->
                 <div id="news-result" class="result-section" style="display:none">
                     <div class="result-card">
-                        <div class="result-verdict" id="news-verdict"></div>
-                        <div class="result-confidence" id="news-confidence"></div>
+                        <div class="result-top">
+                            <div class="result-verdict" id="news-verdict"></div>
+                            <div class="result-confidence" id="news-confidence"></div>
+                        </div>
                         <div class="confidence-bar">
                             <div class="confidence-fill" id="news-bar"></div>
                         </div>
@@ -104,45 +172,69 @@
                     </div>
                 </div>
 
-                <!-- Loading -->
-                <div id="news-loading" class="loading" style="display:none">
-                    <div class="spinner"></div>
-                    <p>Analyzing article with AI...</p>
-                </div>
-
                 <!-- Model Chart -->
                 <div class="model-chart" id="news-chart"></div>
 
                 <!-- History -->
                 <div class="history-section">
-                    <div class="history-title">Recent Analyses</div>
+                    <div class="history-title">📋 Recent Analyses</div>
                     <div class="history-list" id="news-history-list">
-                        <p style="color:rgba(255,255,255,0.25);font-size:0.82rem">
+                        <div class="empty-history">
                             No analyses yet — try detecting some news above!
-                        </p>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
             <!-- DEEPFAKE TAB -->
             <div id="deepfake-tab" class="tab-content" style="display:none">
+
+                <!-- Header -->
                 <div class="tab-header">
-                    <h2>🖼️ Deepfake Detection</h2>
-                    <p>Upload an image to detect if it's AI-generated or manipulated</p>
+                    <div class="tab-header-left">
+                        <div class="tab-icon-wrap">🖼️</div>
+                        <div>
+                            <h2>Deepfake Detection</h2>
+                            <p>Upload an image to detect if it's AI-generated or manipulated</p>
+                        </div>
+                    </div>
+                    <div class="tab-accuracy-badge">
+                        <span>83.4%</span> Accuracy
+                    </div>
                 </div>
 
-                <div class="input-section">
+                <!-- Input Card -->
+                <div class="input-card">
                     <div class="upload-area" id="upload-area"
                         onclick="document.getElementById('image-input').click()">
                         <div class="upload-icon">📁</div>
-                        <p>Click or drag & drop to upload</p>
-                        <span>JPG, PNG supported • Max 10MB</span>
+                        <div class="upload-text">
+                            <p>Click or drag & drop to upload image</p>
+                            <span>JPG, PNG supported • Max 10MB</span>
+                        </div>
                         <input type="file" id="image-input" accept="image/*"
                             style="display:none" onchange="previewImage(event)">
                     </div>
 
                     <div id="image-preview" style="display:none">
-                        <img id="preview-img" src="" alt="Preview">
+                        <div class="preview-container">
+                            <img id="preview-img" src="" alt="Preview">
+                            <button class="change-img-btn"
+                                onclick="document.getElementById('image-input').click()">
+                                🔄 Change Image
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tips -->
+                    <div class="tips-box">
+                        <span class="tips-icon">💡</span>
+                        <div class="tips-content">
+                            <span>✓ Face images work best</span>
+                            <span>✓ Clear & high resolution</span>
+                            <span>✓ JPG or PNG format</span>
+                        </div>
                     </div>
 
                     <button class="analyze-btn" onclick="analyzeDeepfake()"
@@ -151,11 +243,24 @@
                     </button>
                 </div>
 
+                <!-- Loading -->
+                <div id="deepfake-loading" class="loading" style="display:none">
+                    <div class="loading-inner">
+                        <div class="spinner"></div>
+                        <div>
+                            <div class="loading-title">Analyzing with EfficientNet...</div>
+                            <div class="loading-sub">Running Computer Vision model</div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Result -->
                 <div id="deepfake-result" class="result-section" style="display:none">
                     <div class="result-card">
-                        <div class="result-verdict" id="deepfake-verdict"></div>
-                        <div class="result-confidence" id="deepfake-confidence"></div>
+                        <div class="result-top">
+                            <div class="result-verdict" id="deepfake-verdict"></div>
+                            <div class="result-confidence" id="deepfake-confidence"></div>
+                        </div>
                         <div class="confidence-bar">
                             <div class="confidence-fill" id="deepfake-bar"></div>
                         </div>
@@ -163,21 +268,16 @@
                     </div>
                 </div>
 
-                <!-- Loading -->
-                <div id="deepfake-loading" class="loading" style="display:none">
-                    <div class="spinner"></div>
-                    <p>Analyzing image with EfficientNet...</p>
-                </div>
-
                 <!-- History -->
                 <div class="history-section">
-                    <div class="history-title">Recent Analyses</div>
+                    <div class="history-title">📋 Recent Analyses</div>
                     <div class="history-list" id="deepfake-history-list">
-                        <p style="color:rgba(255,255,255,0.25);font-size:0.82rem">
+                        <div class="empty-history">
                             No analyses yet — upload an image above!
-                        </p>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
