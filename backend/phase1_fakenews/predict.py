@@ -11,8 +11,8 @@ lemmatizer = WordNetLemmatizer()
 stop_words = set(stopwords.words('english'))
 
 # Load model and vectorizer
-model = joblib.load("models/fakenews_model.pkl")
-vectorizer = joblib.load("models/tfidf_vectorizer.pkl")
+model = joblib.load("models/model.pkl")
+vectorizer = joblib.load("models/vectorizer.pkl")
 
 def clean_text(text):
     text = str(text).lower()
