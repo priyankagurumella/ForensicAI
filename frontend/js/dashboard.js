@@ -179,13 +179,13 @@ async function analyzeNews() {
 
     try {
         const response = await fetch(`${API}/run/predict`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                data: [text, urlInput || ''],
-                fn_index: 0
-            })
-        });
+           method: 'POST',
+           headers: { 'Content-Type': 'application/json' },
+           body: JSON.stringify({
+             data: [text, ''],
+             fn_index: 0
+    })
+  });
 
         const result = await response.json();
         const verdict = result.data[0];

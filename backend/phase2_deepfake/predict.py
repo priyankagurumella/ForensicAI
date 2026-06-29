@@ -17,9 +17,9 @@ def load_model():
             m.classifier[1].in_features, 2
         )
         m.load_state_dict(torch.load(
-            "backend/models/deepfake_model.pt",
-            map_location='cpu'
-        ))
+       "models/deepfake_model.pt",
+       map_location='cpu'
+    ))
         m.eval()
         model = m
         print("Model loaded successfully!")
